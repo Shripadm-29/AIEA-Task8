@@ -7,8 +7,21 @@ def main():
     logic_lm_chain = LogicLMChain(kb_path)
 
     description = """
-Define who is an uncle in terms of parent and sibling relationships.
+Define the following relations using pure Prolog-style logic rules:
+
+- Uncle: uncle(X, Y) :- parent(Z, Y), sibling(X, Z).
+- Aunt: aunt(X, Y) :- parent(Z, Y), sibling(X, Z).
+- Cousin: cousin(X, Y) :- parent(Z, X), parent(W, Y), sibling(Z, W).
+- Grandparent: grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
+- Great-grandparent: greatgrandparent(X, Y) :- parent(X, Z), parent(Z, W), parent(W, Y).
+
+Important:
+- Only output pure logic rules.
+- No explanations, no bullet points, no extra text.
+- Each rule must end with a period.
+- Do NOT label the rules or explain them — just list the logic code directly.
 """
+
 
     solution = logic_lm_chain.solve(description)
 
