@@ -1,11 +1,17 @@
 # main.py
 
+# Import the LogicLMChain class (this ties GPT + KB + Solver together)
 from logic_lm_chain import LogicLMChain
 
+# Main function (program starts here)
 def main():
+    # Path to the knowledge base file (facts + rules are stored here)
     kb_path = "kb.txt"
+
+    # Make a LogicLMChain object using the KB
     logic_lm_chain = LogicLMChain(kb_path)
 
+    # Natural language description we want GPT to turn into logic rules
     description = """
 Define the following relations using pure Prolog-style logic rules:
 
@@ -22,12 +28,15 @@ Important:
 - Do NOT label the rules or explain them — just list the logic code directly.
 """
 
-
+    # Step 1: Give description to the chain → GPT makes rules → Solver derives facts
     solution = logic_lm_chain.solve(description)
 
+    # Step 2: Print all the final derived facts
     print("\nFinal Derived Facts:")
     for pred, args in solution:
+        # Format like: uncle(john, alice)
         print(f"{pred}({', '.join(args)})")
 
+# Run main() if this file is executed directly
 if __name__ == "__main__":
     main()
